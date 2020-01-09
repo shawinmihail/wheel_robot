@@ -2,6 +2,8 @@ close all
 %%
 lw = 1;
 fs = 22;
+save = 1;
+path = 'res1/';
 
 % model state
 t = out.state.Time;
@@ -26,28 +28,137 @@ y_est = out.X.Data(:,2);
 vx_est = out.X.Data(:,4);
 vy_est = out.X.Data(:,5);
 
+roll_est = out.X.Data(:,9);
+pitch_est = out.X.Data(:,8);
+yaw_est = out.X.Data(:,7);
+
+%% r
+% x
 figure
 hold on;
-plot(x_mes - x_act, 'LineWidth', lw, 'Color', 'k');
-plot(x_est - x_act, 'LineWidth', lw, 'Color', 'r');
-title('x', 'FontSize', fs);
+plot(t, x_mes - x_act, 'LineWidth', lw, 'Color', 'k');
+plot(t, x_est - x_act, 'LineWidth', lw, 'Color', 'r');
+title('ошибка, x', 'FontSize', fs);
+
+plot_legend(1).str(:) = 'Ошибка измерений';
+plot_legend(2).str(:) = 'Ошибка оценки';
+lgd = legend(plot_legend(:).str);
+lgd.FontSize = fs;
+
+set(gca,'FontSize',fs)
+xlabel('Время, с')
+ylabel('Ошибка, м')
+
+if save
+saveas(gcf, [path  'x_err.png'])
+saveas(gcf, [path  'x_err.fig'])
+end
+
+% y
+figure
+hold on;
+plot(t, y_mes - y_act, 'LineWidth', lw, 'Color', 'k');
+plot(t, y_est - y_act, 'LineWidth', lw, 'Color', 'r');
+title('ошибка, y', 'FontSize', fs);
+
+plot_legend(1).str(:) = 'Ошибка измерений';
+plot_legend(2).str(:) = 'Ошибка оценки';
+lgd = legend(plot_legend(:).str);
+lgd.FontSize = fs;
+
+set(gca,'FontSize',fs)
+xlabel('Время, с')
+ylabel('Ошибка, м')
+
+if save
+saveas(gcf, [path  'y_err.png'])
+saveas(gcf, [path  'y_err.fig'])
+end
+
+%% v
+% vx
+figure
+hold on;
+plot(t, vx_mes - vx_act, 'LineWidth', lw, 'Color', 'k');
+plot(t, vx_est - vx_act, 'LineWidth', lw, 'Color', 'r');
+title('ошибка, vx', 'FontSize', fs);
+
+plot_legend(1).str(:) = 'Ошибка измерений';
+plot_legend(2).str(:) = 'Ошибка оценки';
+lgd = legend(plot_legend(:).str);
+lgd.FontSize = fs;
+
+set(gca,'FontSize',fs)
+xlabel('Время, с')
+ylabel('Ошибка, м/с')
+
+if save
+saveas(gcf, [path  'vx_err.png'])
+saveas(gcf, [path  'vx_err.fig'])
+end
+
+% vy
+figure
+hold on;
+plot(t, vy_mes - vy_act, 'LineWidth', lw, 'Color', 'k');
+plot(t, vy_est - vy_act, 'LineWidth', lw, 'Color', 'r');
+title('ошибка, vy', 'FontSize', fs);
+
+plot_legend(1).str(:) = 'Ошибка измерений';
+plot_legend(2).str(:) = 'Ошибка оценки';
+lgd = legend(plot_legend(:).str);
+lgd.FontSize = fs;
+
+set(gca,'FontSize',fs)
+xlabel('Время, с')
+ylabel('Ошибка, м/с')
+
+if save
+saveas(gcf, [path  'vy_err.png'])
+saveas(gcf, [path  'vy_err.fig'])
+end
+
+%% eulZYX
+figure
+hold on;
+plot(t, roll_est, 'LineWidth', lw, 'Color', 'r');
+title('оценка, крен', 'FontSize', fs);
+
+set(gca,'FontSize',fs)
+xlabel('Время, с')
+ylabel('Ошибка, рад')
+
+if save
+saveas(gcf, [path  'roll.png'])
+saveas(gcf, [path  'roll.fig'])
+end
 
 figure
 hold on;
-plot(y_mes - y_act, 'LineWidth', lw, 'Color', 'k');
-plot(y_est - y_act, 'LineWidth', lw, 'Color', 'r');
-title('y', 'FontSize', fs);
+plot(t, pitch_est, 'LineWidth', lw, 'Color', 'r');
+title('оценка, тангаж', 'FontSize', fs);
+
+set(gca,'FontSize',fs)
+xlabel('Время, с')
+ylabel('Ошибка, рад')
+
+if save
+saveas(gcf, [path  'pitch.png'])
+saveas(gcf, [path  'pitch.fig'])
+end
 
 figure
 hold on;
-plot(vx_mes - vx_act, 'LineWidth', lw, 'Color', 'k');
-plot(vx_est - vx_act, 'LineWidth', lw, 'Color', 'r');
-title('vx', 'FontSize', fs);
+plot(t, yaw_est-theta_act, 'LineWidth', lw, 'Color', 'r');
+title('ошибка оценки, рысканье', 'FontSize', fs);
 
-figure
-hold on;
-plot(vy_mes - vy_act, 'LineWidth', lw, 'Color', 'k');
-plot(vy_est - vy_act, 'LineWidth', lw, 'Color', 'r');
-title('vy', 'FontSize', fs);
+set(gca,'FontSize',fs)
+xlabel('Время, с')
+ylabel('Ошибка, рад')
+
+if save
+saveas(gcf, [path  'yaw_err.png'])
+saveas(gcf, [path  'yaw_err.fig'])
+end
 
 
