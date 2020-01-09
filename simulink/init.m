@@ -25,3 +25,15 @@ gps_vel_local_rsm = 0.05;
 imu_acc_rsm = 0.25;
 imu_rot_vel_rsm = 0.05;
 
+%% ckf
+% X = [r v eul(ZYX)]
+% Z = [r v a w]
+X0 = [0 0 0    0 0 0    0 0 0]';
+R = diag([gps_pos_local_rsm*[1; 1; 1];    gps_vel_local_rsm*[1; 1; 1];    imu_acc_rsm*[1; 1; 1];    imu_acc_rsm*[1; 1; 1]] .^ 2);
+Q = diag([1e-2*[1; 1; 1];    1e-2*[1; 1; 1];    1e-2*[1; 1; 1]]);
+P0 = 10*Q;
+
+sqrtR = chol(R,'lower');
+sqrtQ = chol(Q,'lower');
+sqrtP0 = chol(P0,'lower');
+
