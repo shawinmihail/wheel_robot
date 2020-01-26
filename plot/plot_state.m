@@ -3,7 +3,7 @@ clc
 %%
 lw = 2;
 fs = 22;
-save = 1;
+save = 0;
 path = 'res1/';
 
 

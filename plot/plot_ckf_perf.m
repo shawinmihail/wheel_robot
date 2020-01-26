@@ -2,7 +2,7 @@ close all
 %%
 lw = 1;
 fs = 22;
-save = 1;
+save = 0;
 path = 'res1/';
 
 % model state
@@ -28,9 +28,10 @@ y_est = out.X.Data(:,2);
 vx_est = out.X.Data(:,4);
 vy_est = out.X.Data(:,5);
 
-roll_est = out.X.Data(:,9);
-pitch_est = out.X.Data(:,8);
-yaw_est = out.X.Data(:,7);
+eul = out.eul_est.Data;
+roll_est = eul(:,1);
+pitch_est = eul(:,2);
+yaw_est = eul(:,3);
 
 %% r
 % x
@@ -160,5 +161,7 @@ if save
 saveas(gcf, [path  'yaw_err.png'])
 saveas(gcf, [path  'yaw_err.fig'])
 end
+
+rms_x = rms(x_act-x_est)
 
 
